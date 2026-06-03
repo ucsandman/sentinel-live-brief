@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LEDGER_SYNC - GOV_INTEL_v1.0</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#006494",
+                        "tertiary": "#ffba57",
+                        "inverse-surface": "#e0e2ed",
+                        "tertiary-fixed": "#ffddb4",
+                        "amber-warning": "#FFD700",
+                        "surface-tint": "#8ecdff",
+                        "on-tertiary": "#452b00",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#32353d",
+                        "on-error": "#690005",
+                        "surface-dim": "#10131b",
+                        "outline-variant": "#40484f",
+                        "on-tertiary-container": "#5a3900",
+                        "tertiary-container": "#e19f3c",
+                        "secondary-fixed": "#e3e2e2",
+                        "surface-muted": "#222222",
+                        "primary-fixed-dim": "#8ecdff",
+                        "on-tertiary-fixed": "#291800",
+                        "secondary-container": "#464747",
+                        "background": "#10131b",
+                        "primary-fixed": "#cbe6ff",
+                        "on-primary": "#00344f",
+                        "primary": "#90cdff",
+                        "surface-container-low": "#181b23",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "error-container": "#93000a",
+                        "border-dim": "#333333",
+                        "outline": "#8a929a",
+                        "on-secondary-container": "#b5b5b5",
+                        "on-primary-fixed-variant": "#004b71",
+                        "crimson-critical": "#FF3B30",
+                        "glow-blue": "rgba(99, 179, 237, 0.3)",
+                        "on-background": "#e0e2ed",
+                        "surface-container-highest": "#32353d",
+                        "surface-container-lowest": "#0b0e15",
+                        "secondary": "#c7c6c6",
+                        "on-secondary": "#303031",
+                        "surface": "#10131b",
+                        "on-secondary-fixed-variant": "#464747",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-primary-container": "#004466",
+                        "inverse-on-surface": "#2d3038",
+                        "tertiary-fixed-dim": "#ffb954",
+                        "on-surface": "#e0e2ed",
+                        "on-primary-fixed": "#001e30",
+                        "surface-container-high": "#272a32",
+                        "primary-container": "#63b3ed",
+                        "surface-bright": "#363941",
+                        "surface-container": "#1d2027",
+                        "on-surface-variant": "#bfc7d1",
+                        "emerald-stable": "#34C759",
+                        "scanline-overlay": "rgba(255, 255, 255, 0.03)",
+                        "on-tertiary-fixed-variant": "#633f00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "16px",
+                        "container-max": "1200px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "xl": "32px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["inter"],
+                        "display-terminal": ["plusJakartaSans"],
+                        "subheading": ["inter"],
+                        "headline-h2": ["plusJakartaSans"],
+                        "data-mono-bold": ["jetbrainsMono"],
+                        "data-mono": ["jetbrainsMono"],
+                        "body-default": ["inter"],
+                        "meta-info": ["inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-terminal": ["24px", { "lineHeight": "32px", "letterSpacing": "0.1em", "fontWeight": "800" }],
+                        "subheading": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-h2": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "data-mono-bold": ["13px", { "lineHeight": "18px", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-default": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "meta-info": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.03) 51%);
+            background-size: 100% 4px;
+        }
+        .glow-border {
+            box-shadow: 0 0 8px rgba(99, 179, 237, 0.3);
+        }
+        .text-glow {
+            text-shadow: 0 0 12px rgba(99, 179, 237, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen scanline relative flex flex-col font-body-default">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary font-data-mono text-data-mono fixed top-0 w-full z-50 border-b border-outline-variant bg-surface-container-low flex justify-between items-center px-lg h-16 w-full">
+<div class="flex items-center gap-lg">
+<span class="font-display-terminal text-display-terminal text-primary tracking-widest">GOV_INTEL_v1.0</span>
+<div class="hidden md:flex items-center gap-sm bg-surface-variant px-md py-sm rounded border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="search" data-weight="fill" style="font-variation-settings: 'FILL' 1;">search</span>
+<input class="bg-transparent border-none outline-none text-on-surface font-data-mono text-data-mono placeholder:text-on-surface-variant w-48" placeholder="TX MONITOR..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined cursor-pointer active:opacity-70 hover:bg-surface-variant hover:text-primary transition-colors duration-150 p-sm rounded" data-icon="settings">settings</span>
+<span class="material-symbols-outlined cursor-pointer active:opacity-70 hover:bg-surface-variant hover:text-primary transition-colors duration-150 p-sm rounded relative" data-icon="notifications_active">
+                notifications_active
+                <span class="absolute top-1 right-1 w-2 h-2 bg-crimson-critical rounded-full animate-pulse"></span>
+</span>
+<span class="material-symbols-outlined cursor-pointer active:opacity-70 hover:bg-surface-variant hover:text-primary transition-colors duration-150 p-sm rounded" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<div class="flex flex-1 pt-16 pb-10 w-full">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface-container-low dark:bg-surface-container-low text-primary dark:text-primary font-data-mono-bold text-data-mono-bold fixed left-0 top-16 h-[calc(100vh-104px)] w-64 border-r border-outline-variant flex-col py-md space-y-xs z-40">
+<div class="px-md mb-lg">
+<div class="font-data-mono text-meta-info text-on-surface-variant">TERMINAL_ID</div>
+<div class="font-display-terminal text-subheading text-primary truncate">8453-ALPHA-SIGMA</div>
+</div>
+<a class="text-outline px-md py-sm hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200 flex items-center gap-md cursor-pointer" href="index.html">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+                SIGNAL_FEED
+            </a>
+<a class="text-outline px-md py-sm hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200 flex items-center gap-md cursor-pointer" href="reg-pulse.html">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                REG_PULSE
+            </a>
+<a class="text-outline px-md py-sm hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200 flex items-center gap-md cursor-pointer" href="market-scan.html">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                MARKET_SCAN
+            </a>
+<a class="text-primary bg-surface-variant border-l-4 border-primary px-md py-sm flex items-center gap-md cursor-pointer" href="ledger-sync.html">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                LEDGER_SYNC
+            </a>
+<a class="text-outline px-md py-sm hover:text-on-surface hover:bg-surface-container-highest transition-all duration-200 flex items-center gap-md cursor-pointer" href="archive.html">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                ARCHIVE
+            </a>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-lg overflow-y-auto">
+<div class="max-w-container-max mx-auto space-y-xl">
+<!-- Ledger Header -->
+<div class="border border-outline-variant bg-surface-container p-lg flex flex-col md:flex-row justify-between items-center glow-border rounded">
+<div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-unit">LEDGER STATUS</div>
+<div class="font-display-terminal text-[32px] font-extrabold text-primary text-glow tracking-widest">TOTAL SETTLED: 47.00 USDC</div>
+</div>
+<div class="flex gap-md mt-md md:mt-0">
+<button class="bg-surface-variant border border-outline-variant text-on-surface font-data-mono-bold text-data-mono-bold px-md py-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                            EXPORT CSV
+                        </button>
+<button class="bg-primary-container text-on-primary-container font-data-mono-bold text-data-mono-bold px-md py-sm border border-primary hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="sync">sync</span>
+                            SYNC NOW
+                        </button>
+</div>
+</div>
+<!-- Ledger Table Container -->
+<div class="border border-outline-variant bg-surface-container-low rounded overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left font-data-mono text-data-mono whitespace-nowrap">
+<thead class="bg-surface border-b-2 border-outline-variant text-on-surface-variant">
+<tr>
+<th class="py-md px-md font-label-caps text-label-caps">TX_ID</th>
+<th class="py-md px-md font-label-caps text-label-caps">TIMESTAMP (UTC)</th>
+<th class="py-md px-md font-label-caps text-label-caps">BRIEF TYPE</th>
+<th class="py-md px-md font-label-caps text-label-caps">AMOUNT (USDC)</th>
+<th class="py-md px-md font-label-caps text-label-caps">NETWORK</th>
+<th class="py-md px-md font-label-caps text-label-caps text-right">STATUS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-variant transition-colors group">
+<td class="py-md px-md text-primary group-hover:underline cursor-pointer">0x8f...4a2b</td>
+<td class="py-md px-md text-on-surface">2024-05-20 14:23:01</td>
+<td class="py-md px-md text-on-surface">AI Gov Scan</td>
+<td class="py-md px-md text-on-surface">5.00</td>
+<td class="py-md px-md text-on-surface-variant">Base</td>
+<td class="py-md px-md text-right">
+<span class="inline-flex items-center gap-sm px-2 py-1 bg-emerald-stable/10 text-emerald-stable border border-emerald-stable/30 rounded text-meta-info font-data-mono-bold glow-border" style="box-shadow: 0 0 8px rgba(52, 199, 89, 0.2);">
+<span class="w-2 h-2 rounded-full bg-emerald-stable"></span>
+                                            SETTLED
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors group">
+<td class="py-md px-md text-primary group-hover:underline cursor-pointer">0x1c...9d3f</td>
+<td class="py-md px-md text-on-surface">2024-05-20 13:45:22</td>
+<td class="py-md px-md text-on-surface">BNPL Briefing</td>
+<td class="py-md px-md text-on-surface">12.50</td>
+<td class="py-md px-md text-on-surface-variant">Base</td>
+<td class="py-md px-md text-right">
+<span class="inline-flex items-center gap-sm px-2 py-1 bg-emerald-stable/10 text-emerald-stable border border-emerald-stable/30 rounded text-meta-info font-data-mono-bold glow-border" style="box-shadow: 0 0 8px rgba(52, 199, 89, 0.2);">
+<span class="w-2 h-2 rounded-full bg-emerald-stable"></span>
+                                            SETTLED
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors group bg-amber-warning/5">
+<td class="py-md px-md text-primary group-hover:underline cursor-pointer">0x7e...b21a</td>
+<td class="py-md px-md text-on-surface">2024-05-20 13:10:05</td>
+<td class="py-md px-md text-on-surface">DeFi Policy Review</td>
+<td class="py-md px-md text-on-surface">8.00</td>
+<td class="py-md px-md text-on-surface-variant">Base</td>
+<td class="py-md px-md text-right">
+<span class="inline-flex items-center gap-sm px-2 py-1 bg-amber-warning/10 text-amber-warning border border-amber-warning/30 rounded text-meta-info font-data-mono-bold">
+<span class="w-2 h-2 rounded-full bg-amber-warning animate-pulse"></span>
+                                            PENDING
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors group">
+<td class="py-md px-md text-primary group-hover:underline cursor-pointer">0x3a...8c9e</td>
+<td class="py-md px-md text-on-surface">2024-05-20 11:22:45</td>
+<td class="py-md px-md text-on-surface">CBDC Outlook</td>
+<td class="py-md px-md text-on-surface">4.50</td>
+<td class="py-md px-md text-on-surface-variant">Base</td>
+<td class="py-md px-md text-right">
+<span class="inline-flex items-center gap-sm px-2 py-1 bg-emerald-stable/10 text-emerald-stable border border-emerald-stable/30 rounded text-meta-info font-data-mono-bold glow-border" style="box-shadow: 0 0 8px rgba(52, 199, 89, 0.2);">
+<span class="w-2 h-2 rounded-full bg-emerald-stable"></span>
+                                            SETTLED
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors group">
+<td class="py-md px-md text-primary group-hover:underline cursor-pointer">0x9b...1f4d</td>
+<td class="py-md px-md text-on-surface">2024-05-20 09:15:12</td>
+<td class="py-md px-md text-on-surface">Stablecoin Audit</td>
+<td class="py-md px-md text-on-surface">15.00</td>
+<td class="py-md px-md text-on-surface-variant">Base</td>
+<td class="py-md px-md text-right">
+<span class="inline-flex items-center gap-sm px-2 py-1 bg-emerald-stable/10 text-emerald-stable border border-emerald-stable/30 rounded text-meta-info font-data-mono-bold glow-border" style="box-shadow: 0 0 8px rgba(52, 199, 89, 0.2);">
+<span class="w-2 h-2 rounded-full bg-emerald-stable"></span>
+                                            SETTLED
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-variant transition-colors group">
+<td class="py-md px-md text-primary group-hover:underline cursor-pointer">0x5c...e7b2</td>
+<td class="py-md px-md text-on-surface">2024-05-19 22:40:33</td>
+<td class="py-md px-md text-on-surface">Market Pulse</td>
+<td class="py-md px-md text-on-surface">2.00</td>
+<td class="py-md px-md text-on-surface-variant">Base</td>
+<td class="py-md px-md text-right">
+<span class="inline-flex items-center gap-sm px-2 py-1 bg-emerald-stable/10 text-emerald-stable border border-emerald-stable/30 rounded text-meta-info font-data-mono-bold glow-border" style="box-shadow: 0 0 8px rgba(52, 199, 89, 0.2);">
+<span class="w-2 h-2 rounded-full bg-emerald-stable"></span>
+                                            SETTLED
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest text-emerald-stable dark:text-emerald-stable font-data-mono text-data-mono uppercase fixed bottom-0 w-full h-10 z-50 border-t border-outline-variant bg-scanline-overlay flex justify-between items-center px-lg">
+<div class="font-data-mono-bold text-data-mono-bold text-emerald-stable flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-stable animate-pulse"></span>
+            SYSTEM_HEARTBEAT: ACTIVE [⚡ LIVE]
+        </div>
+<div class="flex items-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">v1.2.4-STABLE</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Uptime: 99.99%</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Latency: 14ms</a>
+</div>
+</footer>
+</body></html>

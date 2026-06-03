@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ARCHIVE_VAULT_V1.0 - GOV_INTEL_TERMINAL_V1.0</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-lowest": "#0b0e15",
+                        "tertiary": "#ffba57",
+                        "surface-variant": "#32353d",
+                        "on-tertiary-fixed": "#291800",
+                        "amber-warning": "#FFD700",
+                        "secondary-container": "#464747",
+                        "tertiary-fixed": "#ffddb4",
+                        "border-dim": "#333333",
+                        "error-container": "#93000a",
+                        "outline": "#8a929a",
+                        "background": "#10131b",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-primary": "#006494",
+                        "on-primary": "#00344f",
+                        "surface-tint": "#8ecdff",
+                        "scanline-overlay": "rgba(255, 255, 255, 0.03)",
+                        "primary": "#90cdff",
+                        "tertiary-fixed-dim": "#ffb954",
+                        "primary-fixed": "#cbe6ff",
+                        "secondary": "#c7c6c6",
+                        "surface-dim": "#10131b",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "tertiary-container": "#e19f3c",
+                        "secondary-fixed": "#e3e2e2",
+                        "primary-fixed-dim": "#8ecdff",
+                        "outline-variant": "#40484f",
+                        "surface-container-high": "#272a32",
+                        "on-tertiary-fixed-variant": "#633f00",
+                        "surface": "#10131b",
+                        "on-background": "#e0e2ed",
+                        "on-primary-fixed-variant": "#004b71",
+                        "on-secondary": "#303031",
+                        "on-tertiary": "#452b00",
+                        "surface-container": "#1d2027",
+                        "on-tertiary-container": "#5a3900",
+                        "on-surface": "#e0e2ed",
+                        "inverse-on-surface": "#2d3038",
+                        "primary-container": "#63b3ed",
+                        "crimson-critical": "#FF3B30",
+                        "surface-bright": "#363941",
+                        "inverse-surface": "#e0e2ed",
+                        "on-surface-variant": "#bfc7d1",
+                        "surface-muted": "#222222",
+                        "glow-blue": "rgba(99, 179, 237, 0.3)",
+                        "surface-container-low": "#181b23",
+                        "on-primary-container": "#004466",
+                        "emerald-stable": "#34C759",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-highest": "#32353d",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#b5b5b5",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-primary-fixed": "#001e30"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "container-max": "1200px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "unit": "4px"
+                    },
+                    fontFamily: {
+                        "headline-h2": ["Plus Jakarta Sans", "sans-serif"],
+                        "data-mono": ["JetBrains Mono", "monospace"],
+                        "subheading": ["Inter", "sans-serif"],
+                        "body-default": ["Inter", "sans-serif"],
+                        "display-terminal": ["Plus Jakarta Sans", "sans-serif"],
+                        "data-mono-bold": ["JetBrains Mono", "monospace"],
+                        "meta-info": ["Inter", "sans-serif"],
+                        "label-caps": ["Inter", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-h2": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "subheading": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-default": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "display-terminal": ["24px", { "lineHeight": "32px", "letterSpacing": "0.1em", "fontWeight": "800" }],
+                        "data-mono-bold": ["13px", { "lineHeight": "18px", "fontWeight": "700" }],
+                        "meta-info": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scanline': 'scanline 8s linear infinite',
+                        'ticker': 'ticker 30s linear infinite',
+                        'heartbeat': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+                        'draw-sparkline': 'drawSparkline 4s linear infinite',
+                        'check-pop': 'checkPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                    },
+                    keyframes: {
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100vh)' }
+                        },
+                        ticker: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        drawSparkline: {
+                            '0%': { strokeDashoffset: '150' },
+                            '50%': { strokeDashoffset: '0' },
+                            '100%': { strokeDashoffset: '-150' }
+                        },
+                        checkPop: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .bg-scanlines {
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 1px,
+                rgba(255, 255, 255, 0.03) 2px,
+                rgba(255, 255, 255, 0.03) 3px
+            );
+        }
+        
+        .scanline-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to bottom, transparent, rgba(99, 179, 237, 0.5), transparent);
+            opacity: 0.5;
+            z-index: 45;
+            pointer-events: none;
+            animation: scanline 4s linear infinite;
+        }
+
+        .glow-crimson { box-shadow: 0 0 8px rgba(255, 59, 48, 0.5); }
+        .glow-amber { box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+        .glow-primary { box-shadow: 0 0 8px rgba(99, 179, 237, 0.5); }
+        
+        .dot-glow-crimson { box-shadow: 0 0 10px 2px rgba(255, 59, 48, 0.6); animation: pulse-fast 1s infinite; }
+        .dot-glow-amber { box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.6); animation: pulse-fast 1.5s infinite; }
+        
+        .sparkline-path {
+            stroke-dasharray: 150;
+            stroke-dashoffset: 150;
+            animation: drawSparkline 4s linear infinite;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+
+        @keyframes pulse-red-glow {
+            0%, 100% { box-shadow: 0 0 8px rgba(255, 59, 48, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 59, 48, 0.9); }
+        }
+
+        .pulse-red-glow {
+            animation: pulse-red-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes heartbeat-text {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            15% { opacity: 0.7; transform: scale(0.97); }
+            30% { opacity: 1; transform: scale(1.03); }
+            45% { opacity: 0.7; transform: scale(0.97); }
+            60% { opacity: 1; transform: scale(1); }
+        }
+
+        .animate-heartbeat-rhythm {
+            animation: heartbeat-text 1s ease-in-out infinite;
+            display: inline-block;
+            transform-origin: center;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pulse-red-glow, .animate-heartbeat-rhythm {
+                animation: none !important;
+            }
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #10131b; }
+        ::-webkit-scrollbar-thumb { background: #32353d; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #63b3ed; }
+        
+        @media (min-width: 768px) and (max-width: 1023px) {
+            body {
+                font-size: 85%;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#080b12] text-on-surface font-body-default min-h-screen overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container md:max-lg:text-[85%] flex flex-col relative">
+<!-- Global Scanline Overlay -->
+<div class="pointer-events-none fixed inset-0 z-50 bg-scanlines opacity-50 mix-blend-overlay"></div>
+<div class="scanline-bar"></div>
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-sm md:px-lg h-16 bg-background dark:bg-background border-b-2 border-surface-variant">
+<div class="flex items-center gap-sm md:gap-md font-display-terminal text-[18px] md:text-display-terminal text-primary md:tracking-widest shrink-0">
+            GOV_INTEL_TERMINAL_V1.0
+        </div>
+<div class="flex gap-sm md:gap-md ml-auto md:ml-lg shrink-0 items-center">
+<span class="material-symbols-outlined text-primary hover:bg-surface-variant hover:text-primary transition-colors p-sm md:p-sm cursor-pointer opacity-80 hover:opacity-100">terminal</span>
+<span class="material-symbols-outlined text-primary hover:bg-surface-variant hover:text-primary transition-colors p-sm md:p-sm cursor-pointer opacity-80 hover:opacity-100">settings</span>
+<span class="material-symbols-outlined text-primary hover:bg-surface-variant hover:text-primary transition-colors p-sm md:p-sm cursor-pointer opacity-80 hover:opacity-100">account_circle</span>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed top-16 left-0 w-full md:w-[220px] lg:w-64 md:h-[calc(100vh-64px)] flex md:flex-col z-40 bg-surface-container-lowest dark:bg-surface-container-lowest border-b md:border-b-0 md:border-r border-border-dim overflow-x-auto md:overflow-visible">
+<div class="p-sm md:p-md border-r md:border-r-0 md:border-b border-border-dim md:mb-md shrink-0 flex flex-row md:flex-col items-center md:items-stretch gap-sm md:gap-0">
+<div class="flex items-center gap-sm md:mb-xs">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center overflow-hidden shrink-0">
+<span aria-label="Agent Identifier" class="material-symbols-outlined text-primary">smart_toy</span>
+</div>
+<div class="hidden md:block">
+<div class="font-data-mono-bold text-data-mono-bold text-primary">INTEL_AGENT_01</div>
+<div class="font-meta-info text-meta-info text-on-surface-variant">UTC: 14:22:05</div>
+</div>
+</div>
+<button class="w-auto md:w-full md:mt-md bg-surface-container-high border border-border-dim font-data-mono-bold text-[10px] md:text-data-mono-bold text-primary py-xs md:py-sm px-sm md:px-md hover:bg-surface-variant transition-colors flex justify-center items-center gap-xs whitespace-nowrap">
+<span class="material-symbols-outlined text-[14px] md:text-[16px]">radar</span> <span class="hidden md:inline">DEPLOY_SCAN</span>
+</button>
+</div>
+<div class="flex flex-row md:flex-col gap-xs md:px-sm shrink-0 items-center md:items-stretch overflow-x-auto md:overflow-visible py-sm md:py-0 w-full">
+<a class="flex items-center gap-xs md:gap-md px-sm md:px-md py-sm text-on-surface-variant font-data-mono hover:bg-surface-container-high hover:text-on-surface transition-all shrink-0 md:shrink" href="index.html">
+<span class="material-symbols-outlined">rss_feed</span> <span class="hidden md:inline">SIGNAL_FEED</span>
+</a>
+<a class="flex items-center gap-xs md:gap-md px-sm md:px-md py-sm text-on-surface-variant font-data-mono hover:bg-surface-container-high hover:text-on-surface transition-all shrink-0 md:shrink" href="reg-pulse.html">
+<span class="material-symbols-outlined">gavel</span> <span class="hidden md:inline">REG_PULSE</span>
+</a>
+<a class="flex items-center gap-xs md:gap-md px-sm md:px-md py-sm text-on-surface-variant font-data-mono hover:bg-surface-container-high hover:text-on-surface transition-all shrink-0 md:shrink" href="market-scan.html">
+<span class="material-symbols-outlined">trending_up</span> <span class="hidden md:inline">MARKET_SCAN</span>
+</a>
+<a class="flex items-center gap-xs md:gap-md px-sm md:px-md py-sm text-on-surface-variant font-data-mono hover:bg-surface-container-high hover:text-on-surface transition-all shrink-0 md:shrink" href="ledger-sync.html">
+<span class="material-symbols-outlined">account_balance_wallet</span> <span class="hidden md:inline">LEDGER_SYNC</span>
+</a>
+<a class="flex items-center gap-xs md:gap-md px-sm md:px-md py-sm text-primary md:border-r-2 md:border-primary border-b-2 border-primary md:border-b-0 bg-surface-container-low font-data-mono-bold hover:bg-surface-container-high transition-all shrink-0 md:shrink" href="archive.html">
+<span class="material-symbols-outlined">database</span> <span class="hidden md:inline">ARCHIVE</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="mt-[120px] md:mt-16 md:ml-[220px] lg:ml-64 p-sm md:p-lg flex-1 h-[calc(100vh-120px)] md:h-[calc(100vh-64px)] overflow-y-auto w-full md:w-[calc(100%-220px)] lg:w-[calc(100%-256px)] pb-24 md:pb-24">
+<div class="max-w-[1600px] mx-auto animate-fade-in-up stagger-1">
+<!-- Page Header & Controls -->
+<header class="mb-lg border-b-2 border-surface-variant pb-md flex flex-col xl:flex-row justify-between items-start xl:items-end gap-md">
+<div>
+<h1 class="font-headline-h2 text-headline-h2 text-primary mb-xs uppercase tracking-wider">ARCHIVE_VAULT_V1.0</h1>
+<div class="font-data-mono text-meta-info text-on-surface-variant flex items-center">
+<span class="w-2 h-2 rounded-full bg-emerald-stable mr-sm animate-pulse"></span>
+                        DB_SYNC: OK // LATENCY: 12ms
+                    </div>
+</div>
+<div class="w-full xl:w-auto flex flex-col gap-sm">
+<!-- Terminal Search -->
+<div class="flex items-center bg-surface-container-lowest border border-border-dim p-xs font-data-mono text-data-mono text-primary w-full xl:w-96 shadow-inner">
+<span class="mr-sm pl-xs">[ SEARCH_DB &gt;</span>
+<input class="bg-transparent border-none focus:ring-0 text-primary w-full placeholder-outline-variant p-0 m-0 outline-none" placeholder="_ ]" type="text"/>
+</div>
+<!-- Filter Chips -->
+<div class="flex flex-wrap gap-xs">
+<button class="px-sm py-xs bg-primary/20 text-primary font-data-mono-bold text-label-caps border border-primary/50 hover:bg-primary hover:text-surface-dim transition-colors">ALL</button>
+<button class="px-sm py-xs bg-surface-container-lowest text-on-surface-variant font-data-mono text-label-caps border border-border-dim hover:border-primary/50 hover:text-primary transition-colors">BNPL</button>
+<button class="px-sm py-xs bg-surface-container-lowest text-on-surface-variant font-data-mono text-label-caps border border-border-dim hover:border-primary/50 hover:text-primary transition-colors">AI_GOV</button>
+<button class="px-sm py-xs bg-surface-container-lowest text-on-surface-variant font-data-mono text-label-caps border border-border-dim hover:border-primary/50 hover:text-primary transition-colors">MARKET</button>
+<button class="px-sm py-xs bg-surface-container-lowest text-on-surface-variant font-data-mono text-label-caps border border-border-dim hover:border-primary/50 hover:text-primary transition-colors">INFRASTRUCTURE</button>
+</div>
+</div>
+</header>
+<!-- Archive Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
+<!-- Card 1 -->
+<article class="bg-surface-container border border-surface-variant p-md relative hover:border-primary transition-all group flex flex-col h-full cursor-pointer hover:glow-primary animate-fade-in-up stagger-1">
+<header class="flex justify-between items-start mb-md border-b border-surface-variant pb-sm">
+<div class="font-data-mono-bold text-data-mono-bold text-primary">REF-8453-ALPHA</div>
+<div class="font-data-mono text-meta-info text-on-surface-variant">2024-05-15</div>
+</header>
+<div class="flex items-center gap-sm mb-sm">
+<span class="font-data-mono text-[10px] text-amber-warning border border-amber-warning/50 bg-amber-warning/10 px-xs py-unit">[AI_GOV]</span>
+<span class="font-data-mono text-meta-info text-on-surface-variant">1,240 WORDS</span>
+</div>
+<p class="font-data-mono text-[13px] leading-relaxed text-on-surface opacity-80 line-clamp-3 mt-auto">
+                        Initial analysis of proposed regulatory frameworks concerning autonomous financial agents operating across cross-border liquidity pools. High probability of implementation by Q3.
+                    </p>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface-container border border-surface-variant p-md relative hover:border-emerald-stable transition-all group flex flex-col h-full cursor-pointer hover:shadow-[0_0_8px_rgba(52,199,89,0.5)] animate-fade-in-up stagger-2">
+<header class="flex justify-between items-start mb-md border-b border-surface-variant pb-sm">
+<div class="font-data-mono-bold text-data-mono-bold text-emerald-stable">REF-9921-BETA</div>
+<div class="font-data-mono text-meta-info text-on-surface-variant">2024-05-14</div>
+</header>
+<div class="flex items-center gap-sm mb-sm">
+<span class="font-data-mono text-[10px] text-emerald-stable border border-emerald-stable/50 bg-emerald-stable/10 px-xs py-unit">[MARKET]</span>
+<span class="font-data-mono text-meta-info text-on-surface-variant">850 WORDS</span>
+</div>
+<p class="font-data-mono text-[13px] leading-relaxed text-on-surface opacity-80 line-clamp-3 mt-auto">
+                        Volume spike detected in secondary markets following unscheduled protocol upgrade. Sentiment analysis indicates institutional accumulation ahead of pending governance vote.
+                    </p>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface-container border border-surface-variant p-md relative hover:border-tertiary transition-all group flex flex-col h-full cursor-pointer hover:shadow-[0_0_8px_rgba(255,186,87,0.5)] animate-fade-in-up stagger-3">
+<header class="flex justify-between items-start mb-md border-b border-surface-variant pb-sm">
+<div class="font-data-mono-bold text-data-mono-bold text-tertiary">REF-2241-DELTA</div>
+<div class="font-data-mono text-meta-info text-on-surface-variant">2024-05-12</div>
+</header>
+<div class="flex items-center gap-sm mb-sm">
+<span class="font-data-mono text-[10px] text-tertiary border border-tertiary/50 bg-tertiary/10 px-xs py-unit">[INFRASTRUCTURE]</span>
+<span class="font-data-mono text-meta-info text-on-surface-variant">2,100 WORDS</span>
+</div>
+<p class="font-data-mono text-[13px] leading-relaxed text-on-surface opacity-80 line-clamp-3 mt-auto">
+                        Vulnerability report concerning layer-2 settlement delays during peak congestion. Mitigation strategies deployed by core validators show mixed efficacy under stress testing.
+                    </p>
+</article>
+<!-- Card 4 -->
+<article class="bg-surface-container border border-surface-variant p-md relative hover:border-primary transition-all group flex flex-col h-full cursor-pointer hover:glow-primary animate-fade-in-up stagger-1">
+<header class="flex justify-between items-start mb-md border-b border-surface-variant pb-sm">
+<div class="font-data-mono-bold text-data-mono-bold text-primary">REF-1105-GAMMA</div>
+<div class="font-data-mono text-meta-info text-on-surface-variant">2024-05-10</div>
+</header>
+<div class="flex items-center gap-sm mb-sm">
+<span class="font-data-mono text-[10px] text-primary border border-primary/50 bg-primary/10 px-xs py-unit">[BNPL]</span>
+<span class="font-data-mono text-meta-info text-on-surface-variant">620 WORDS</span>
+</div>
+<p class="font-data-mono text-[13px] leading-relaxed text-on-surface opacity-80 line-clamp-3 mt-auto">
+                        Consumer credit expansion metrics in decentralized lending protocols. Default rates remain stable but warrant monitoring if baseline yields contract in the near term.
+                    </p>
+</article>
+<!-- Card 5 -->
+<article class="bg-surface-container border border-surface-variant p-md relative hover:border-amber-warning transition-all group flex flex-col h-full cursor-pointer hover:glow-amber animate-fade-in-up stagger-2">
+<header class="flex justify-between items-start mb-md border-b border-surface-variant pb-sm">
+<div class="font-data-mono-bold text-data-mono-bold text-amber-warning">REF-7732-ZETA</div>
+<div class="font-data-mono text-meta-info text-on-surface-variant">2024-05-08</div>
+</header>
+<div class="flex items-center gap-sm mb-sm">
+<span class="font-data-mono text-[10px] text-amber-warning border border-amber-warning/50 bg-amber-warning/10 px-xs py-unit">[AI_GOV]</span>
+<span class="font-data-mono text-meta-info text-on-surface-variant">3,400 WORDS</span>
+</div>
+<p class="font-data-mono text-[13px] leading-relaxed text-on-surface opacity-80 line-clamp-3 mt-auto">
+                        Comprehensive review of algorithmic trading constraints within newly established jurisdictional boundaries. Compliance overhead expected to increase latency for high-frequency actors.
+                    </p>
+</article>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-xs md:px-md py-xs h-10 md:h-8 bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-border-dim bg-scanline-overlay overflow-x-auto">
+<div class="flex items-center gap-xs md:gap-sm font-data-mono text-[9px] md:text-meta-info text-emerald-stable dark:text-emerald-stable shrink-0">
+<span class="animate-heartbeat-rhythm">SYSTEM_STABLE_V4.2</span>
+<span class="text-on-surface-variant">//</span>
+<span class="flex items-center gap-xs">HEARTBEAT: <span class="animate-heartbeat">60BPM</span></span>
+<span class="text-on-surface-variant">//</span>
+<span class="flex items-center gap-xs text-primary"><span class="material-symbols-outlined text-[10px] md:text-[14px]">bolt</span> LIVE</span>
+</div>
+<div class="hidden md:flex flex-1 justify-center px-lg shrink-0">
+<!-- Sparkline -->
+<svg class="h-4 w-32 text-primary opacity-50" preserveaspectratio="none" viewbox="0 0 100 20">
+<polyline class="sparkline-path" fill="none" points="0,10 10,12 20,8 30,15 40,5 50,10 60,18 70,8 80,12 90,4 100,10" stroke="currentColor" stroke-width="1"></polyline>
+</svg>
+</div>
+<div class="flex gap-sm md:gap-md font-data-mono text-[9px] md:text-meta-info shrink-0 ml-auto md:ml-0">
+<a class="text-on-surface-variant hover:text-primary transition-opacity" href="#">VULNERABILITY_REPORT</a>
+<a class="text-on-surface-variant hover:text-primary transition-opacity" href="#">LOG_STREAM</a>
+<a class="text-on-surface-variant hover:text-primary transition-opacity hidden md:inline" href="#">API_DOCS</a>
+</div>
+</footer>
+</body></html>
