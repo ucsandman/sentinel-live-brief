@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinel Intelligence — Live Brief</title>
+  <style>
+    /* =====================================================================
+       SENTINEL INTELLIGENCE — Live Brief Dashboard
+       Theme: Build interfaces that feel alive
+       ===================================================================== */
+
+    :root {
+      --bg:         #080b12;
+      --bg2:        #0e1420;
+      --bg3:        #141a26;
+      --border:     rgba(255,255,255,0.07);
+      --border-hi:  rgba(99,179,237,0.25);
+      --text:       #e2e8f0;
+      --text-dim:   #718096;
+      --text-faint: #4a5568;
+      --blue:       #63b3ed;
+      --blue-glow:  rgba(99,179,237,0.15);
+      --green:      #68d391;
+      --green-glow: rgba(104,211,145,0.15);
+      --amber:      #f6ad55;
+      --amber-glow: rgba(246,173,85,0.15);
+      --red:        #fc8181;
+      --red-glow:   rgba(252,129,129,0.15);
+      --purple:     #b794f4;
+      --mono:       'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      --sans:       'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND GRID ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99,179,237,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,179,237,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── AMBIENT GLOW ── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 30%;
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(99,179,237,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: ambientDrift 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientDrift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(60px, 30px) scale(1.1); }
+    }
+
+    .app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ============================================================
+       TICKER
+       ============================================================ */
+    .ticker {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker-label {
+      padding: 0 16px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      text-transform: uppercase;
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      animation: tickerScroll 50s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      padding: 0 24px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      border-right: 1px solid var(--border);
+    }
+
+    .ticker-item .up   { color: var(--green); }
+    .ticker-item .down { color: var(--red); }
+    .ticker-item .tag  { color: var(--blue); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; margin-right: 6px; }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(99,179,237,0.3);
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(99,179,237,0.3); }
+      50%       { box-shadow: 0 0 30px rgba(99,179,237,0.5), 0 0 60px rgba(99,179,237,0.15); }
+    }
+
+    .logo-text { line-height: 1.2; }
+    .logo-text h1 { font-size: 15px; font-weight: 700; letter-spacing: 0.05em; color: var(--text); }
+    .logo-text span { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); font-family: var(--mono); }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .status-dot {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .status-dot::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: statusBlink 2s ease-in-out infinite;
+    }
+
+    @keyframes statusBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .timestamp {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-faint);
+    }
+
+    .payment-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green-glow);
+      border: 1px solid rgba(104,211,145,0.3);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .payment-badge .coin {
+      font-size: 13px;
+      animation: coinSpin 4s linear infinite;
+    }
+
+    @keyframes coinSpin {
+      0%   { transform: rotateY(0deg); }
+      45%  { transform: rotateY(90deg); }
+      50%  { transform: rotateY(90deg); }
+      95%  { transform: rotateY(0deg); }
+      100% { transform: rotateY(0deg); }
+    }
+
+    /* ============================================================
+       MAIN LAYOUT
+       ============================================================ */
+    .main {
+      display: grid;
+      grid-template-columns: 300px 1fr 280px;
+      gap: 0;
+      flex: 1;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ============================================================
+       LEFT: SIGNAL FEED
+       ============================================================ */
+    .signal-feed {
+      border-right: 1px solid var(--border);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .panel-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-label .count {
+      background: var(--bg3);
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: var(--text-dim);
+      font-size: 10px;
+    }
+
+    .signal-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signal-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .signal-card.critical::before  { background: var(--red); }
+    .signal-card.high::before      { background: var(--amber); }
+    .signal-card.medium::before    { background: var(--blue); }
+    .signal-card.low::before       { background: var(--text-faint); }
+
+    .signal-card:hover {
+      border-color: var(--border-hi);
+      background: var(--bg3);
+      transform: translateX(2px);
+    }
+
+    .signal-card.active {
+      border-color: var(--border-hi);
+      background: var(--bg3);
+      box-shadow: 0 0 0 1px rgba(99,179,237,0.1), inset 0 0 20px rgba(99,179,237,0.03);
+    }
+
+    .signal-card.critical {
+      animation: criticalPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes criticalPulse {
+      0%, 100% { box-shadow: none; }
+      50%       { box-shadow: 0 0 12px rgba(252,129,129,0.1), inset 0 0 20px rgba(252,129,129,0.03); }
+    }
+
+    .signal-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .signal-category {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .signal-card.critical  .signal-category { color: var(--red); }
+    .signal-card.high      .signal-category { color: var(--amber); }
+    .signal-card.medium    .signal-category { color: var(--blue); }
+    .signal-card.low       .signal-category { color: var(--text-faint); }
+
+    .signal-urgency {
+      display: flex;
+      gap: 2px;
+    }
+
+    .urgency-pip {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--bg3);
+    }
+
+    .signal-card.critical  .urgency-pip:nth-child(-n+4) { background: var(--red); }
+    .signal-card.high      .urgency-pip:nth-child(-n+3) { background: var(--amber); }
+    .signal-card.medium    .urgency-pip:nth-child(-n+2) { background: var(--blue); }
+    .signal-card.low       .urgency-pip:nth-child(-n+1) { background: var(--text-faint); }
+
+    .signal-title {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .signal-source {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+
+    /* New signal animation */
+    .signal-card.new-signal {
+      animation: slideIn 0.4s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ============================================================
+       CENTER: LIVE BRIEF
+       ============================================================ */
+    .brief-panel {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+    }
+
+    .brief-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brief-title-block h2 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .brief-title-block .brief-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .brief-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text-dim);
+      transition: all 0.2s ease;
+      font-family: var(--sans);
+    }
+
+    .btn:hover { border-color: var(--border-hi); color: var(--text); }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--bg);
+      border-color: var(--blue);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover { opacity: 0.9; box-shadow: 0 0 16px rgba(99,179,237,0.3); }
+
+    .brief-content {
+      flex: 1;
+      padding: 28px;
+      overflow-y: auto;
+    }
+
+    .brief-section {
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .brief-section:nth-child(1) { animation-delay: 0.1s; }
+    .brief-section:nth-child(2) { animation-delay: 0.4s; }
+    .brief-section:nth-child(3) { animation-delay: 0.7s; }
+    .brief-section:nth-child(4) { animation-delay: 1.0s; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .section-icon.red    { background: var(--red-glow);   border: 1px solid rgba(252,129,129,0.2); }
+    .section-icon.amber  { background: var(--amber-glow); border: 1px solid rgba(246,173,85,0.2); }
+    .section-icon.blue   { background: var(--blue-glow);  border: 1px solid rgba(99,179,237,0.2); }
+    .section-icon.purple { background: rgba(183,148,244,0.1); border: 1px solid rgba(183,148,244,0.2); }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .brief-item {
+      padding: 14px 16px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .brief-item:hover {
+      border-color: var(--border-hi);
+      background: var(--bg3);
+    }
+
+    .brief-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .brief-item-body {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+
+    .brief-item .chip {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-right: 6px;
+      margin-top: 7px;
+    }
+
+    .chip-red    { background: var(--red-glow);   color: var(--red);   border: 1px solid rgba(252,129,129,0.2); }
+    .chip-amber  { background: var(--amber-glow); color: var(--amber); border: 1px solid rgba(246,173,85,0.2); }
+    .chip-blue   { background: var(--blue-glow);  color: var(--blue);  border: 1px solid rgba(99,179,237,0.2); }
+    .chip-green  { background: var(--green-glow); color: var(--green); border: 1px solid rgba(104,211,145,0.2); }
+    .chip-purple { background: rgba(183,148,244,0.1); color: var(--purple); border: 1px solid rgba(183,148,244,0.2); }
+
+    /* Typing cursor */
+    .typing-cursor::after {
+      content: '|';
+      animation: cursorBlink 0.8s step-end infinite;
+      color: var(--blue);
+    }
+
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ============================================================
+       RIGHT: PAYMENT + NETWORK
+       ============================================================ */
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    /* Payment flow */
+    .payment-flow {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .pf-title {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+
+    .pf-amount {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .pf-amount .value {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: var(--mono);
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .pf-amount .currency {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .pf-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .pf-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      position: relative;
+    }
+
+    .pf-step + .pf-step::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 0;
+      bottom: 50%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .pf-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      background: var(--bg3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .pf-step.active .pf-dot {
+      border-color: var(--blue);
+      background: var(--blue-glow);
+      animation: stepPulse 1.5s ease-in-out infinite;
+    }
+
+    .pf-step.done .pf-dot {
+      border-color: var(--green);
+      background: var(--green-glow);
+    }
+
+    @keyframes stepPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(99,179,237,0.3); }
+      50%       { box-shadow: 0 0 0 6px rgba(99,179,237,0); }
+    }
+
+    .pf-step-label {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .pf-step.done  .pf-step-label { color: var(--green); }
+    .pf-step.active .pf-step-label { color: var(--blue); }
+
+    /* Mini network stats */
+    .network-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .stat-row:last-child { border-bottom: none; }
+
+    .stat-label { color: var(--text-faint); font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em; }
+    .stat-value { color: var(--text); font-family: var(--mono); font-size: 11px; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.blue  { color: var(--blue); }
+
+    /* Animated sparkline */
+    .sparkline {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .sparkline svg {
+      width: 100%;
+      height: 60px;
+      display: block;
+    }
+
+    .sparkline-path {
+      fill: none;
+      stroke: var(--blue);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .sparkline-fill {
+      fill: url(#sparkGradient);
+    }
+
+    /* Activity pulse ring */
+    .activity-ring {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4px 0;
+    }
+
+    .ring-outer {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1px solid rgba(99,179,237,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: ringRotate 8s linear infinite;
+    }
+
+    @keyframes ringRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .ring-inner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 1px solid rgba(104,211,145,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: ringRotate 5s linear infinite reverse;
+    }
+
+    .ring-core {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99,179,237,0.15) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      animation: corePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes corePulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.1); }
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg2);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+
+    .footer-left .sep { color: var(--border); }
+
+    .footer-right {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+
+    .footer-right span { color: var(--blue); }
+
+    /* Scanning line */
+    .scan-line {
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(99,179,237,0.15) 30%, rgba(99,179,237,0.4) 50%, rgba(99,179,237,0.15) 70%, transparent 100%);
+      pointer-events: none;
+      z-index: 100;
+      animation: scanDown 8s linear infinite;
+    }
+
+    @keyframes scanDown {
+      from { top: 0; }
+      to   { top: 100vh; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .main { grid-template-columns: 1fr; }
+      .signal-feed, .brief-panel { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scan-line"></div>
+
+<div class="app">
+
+  <!-- ── TICKER ── -->
+  <div class="ticker">
+    <div class="ticker-label">⚡ Live</div>
+    <div style="overflow:hidden;flex:1;display:flex;">
+      <div class="ticker-track" id="tickerTrack">
+        <span class="ticker-item"><span class="tag">CFPB</span>BNPL lender rule effective Sep 2026 <span class="down">↓ compliance gap widens</span></span>
+        <span class="ticker-item"><span class="tag">Klarna</span>NYSE IPO S-1 filed, $15B target <span class="up">↑ embedded finance</span></span>
+        <span class="ticker-item"><span class="tag">EU AI Act</span>GPAI model deadline Aug 2 <span class="down">↓ 18 flagged providers</span></span>
+        <span class="ticker-item"><span class="tag">Base</span>USDC settlements +34% WoW <span class="up">↑ L2 traction</span></span>
+        <span class="ticker-item"><span class="tag">SEC</span>AI disclosure guidance active Q3 2026 <span class="down">↓ board prep needed</span></span>
+        <span class="ticker-item"><span class="tag">Affirm</span>Q2 GMV $8.1B beat <span class="up">↑ +22% YoY</span></span>
+        <span class="ticker-item"><span class="tag">FCA</span>Model risk framework final <span class="down">↓ review cycle</span></span>
+        <span class="ticker-item"><span class="tag">RBI</span>BNPL licensing draft open comment <span class="down">↓ global compliance</span></span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-item"><span class="tag">CFPB</span>BNPL lender rule effective Sep 2026 <span class="down">↓ compliance gap widens</span></span>
+        <span class="ticker-item"><span class="tag">Klarna</span>NYSE IPO S-1 filed, $15B target <span class="up">↑ embedded finance</span></span>
+        <span class="ticker-item"><span class="tag">EU AI Act</span>GPAI model deadline Aug 2 <span class="down">↓ 18 flagged providers</span></span>
+        <span class="ticker-item"><span class="tag">Base</span>USDC settlements +34% WoW <span class="up">↑ L2 traction</span></span>
+        <span class="ticker-item"><span class="tag">SEC</span>AI disclosure guidance active Q3 2026 <span class="down">↓ board prep needed</span></span>
+        <span class="ticker-item"><span class="tag">Affirm</span>Q2 GMV $8.1B beat <span class="up">↑ +22% YoY</span></span>
+        <span class="ticker-item"><span class="tag">FCA</span>Model risk framework final <span class="down">↓ review cycle</span></span>
+        <span class="ticker-item"><span class="tag">RBI</span>BNPL licensing draft open comment <span class="down">↓ global compliance</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HEADER ── -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-mark">◈</div>
+      <div class="logo-text">
+        <h1>SENTINEL INTELLIGENCE</h1>
+        <span>Fintech &amp; AI Governance — Live Brief</span>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="status-dot">Live feed active</div>
+      <div class="timestamp" id="clock">--:--:-- UTC</div>
+      <div class="payment-badge">
+        <span class="coin">◎</span>
+        Paid — USDC on Base
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+
+    <!-- LEFT: Signal Feed -->
+    <div class="signal-feed">
+      <div class="panel-label">
+        Active Signals
+        <span class="count" id="signalCount">7</span>
+      </div>
+
+      <div class="signal-card critical active" id="sig1">
+        <div class="signal-top">
+          <span class="signal-category">Regulatory</span>
+          <div class="signal-urgency">
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+          </div>
+        </div>
+        <div class="signal-title">CFPB BNPL rule — Q3 compliance deadline</div>
+        <div class="signal-source">CFPB · 2h ago</div>
+      </div>
+
+      <div class="signal-card high">
+        <div class="signal-top">
+          <span class="signal-category">Market</span>
+          <div class="signal-urgency">
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+          </div>
+        </div>
+        <div class="signal-title">Klarna IPO S-1 filed — $15B valuation target</div>
+        <div class="signal-source">SEC EDGAR · 4h ago</div>
+      </div>
+
+      <div class="signal-card high">
+        <div class="signal-top">
+          <span class="signal-category">AI Governance</span>
+          <div class="signal-urgency">
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+          </div>
+        </div>
+        <div class="signal-title">EU AI Act GPAI deadline: 18 models flagged for review</div>
+        <div class="signal-source">EU AI Office · 6h ago</div>
+      </div>
+
+      <div class="signal-card medium">
+        <div class="signal-top">
+          <span class="signal-category">Infrastructure</span>
+          <div class="signal-urgency">
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+          </div>
+        </div>
+        <div class="signal-title">Base mainnet USDC volume up 34% week-over-week</div>
+        <div class="signal-source">Dune Analytics · 8h ago</div>
+      </div>
+
+      <div class="signal-card medium">
+        <div class="signal-top">
+          <span class="signal-category">Enforcement</span>
+          <div class="signal-urgency">
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+          </div>
+        </div>
+        <div class="signal-title">SEC AI disclosure guidance: Q3 2026 board requirements</div>
+        <div class="signal-source">SEC.gov · 10h ago</div>
+      </div>
+
+      <div class="signal-card medium">
+        <div class="signal-top">
+          <span class="signal-category">Earnings</span>
+          <div class="signal-urgency">
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+          </div>
+        </div>
+        <div class="signal-title">Affirm Q2 GMV $8.1B — beat by $300M, +22% YoY</div>
+        <div class="signal-source">IR Release · 12h ago</div>
+      </div>
+
+      <div class="signal-card low">
+        <div class="signal-top">
+          <span class="signal-category">Global</span>
+          <div class="signal-urgency">
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+            <div class="urgency-pip"></div>
+          </div>
+        </div>
+        <div class="signal-title">RBI BNPL licensing draft — comment period closes July 15</div>
+        <div class="signal-source">Reserve Bank of India · 1d ago</div>
+      </div>
+    </div>
+
+    <!-- CENTER: Live Brief -->
+    <div class="brief-panel">
+      <div class="brief-header">
+        <div class="brief-title-block">
+          <h2>BNPL &amp; Embedded Finance</h2>
+          <div class="brief-meta">Jun 3, 2026 · 08:00 UTC · Briefing #147</div>
+        </div>
+        <div class="brief-actions">
+          <button class="btn">Archive</button>
+          <button class="btn">Share</button>
+          <button class="btn btn-primary">Full Report →</button>
+        </div>
+      </div>
+
+      <div class="brief-content">
+
+        <div class="brief-section">
+          <div class="section-header">
+            <div class="section-icon red">🚨</div>
+            <div class="section-title">Critical Alerts</div>
+          </div>
+          <div class="brief-item">
+            <div class="brief-item-title">CFPB finalizes BNPL "credit card" rule — September deadline</div>
+            <div class="brief-item-body">The CFPB's interpretive rule treating BNPL lenders as credit card issuers takes effect this quarter. Lenders without billing dispute and refund processes face enforcement exposure. Estimated 40% of current BNPL volume is non-compliant.</div>
+            <span class="chip chip-red">Enforcement</span>
+            <span class="chip chip-amber">Q3 Deadline</span>
+          </div>
+          <div class="brief-item">
+            <div class="brief-item-title">EU AI Act: 18 GPAI model providers flagged, enforcement Aug 2</div>
+            <div class="brief-item-body">The EU AI Office has flagged 18 general-purpose AI model providers for missing technical documentation under the GPAI provisions. Companies have 30 days to remedy before formal enforcement proceedings begin.</div>
+            <span class="chip chip-red">EU Enforcement</span>
+            <span class="chip chip-purple">AI Governance</span>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="section-header">
+            <div class="section-icon amber">📡</div>
+            <div class="section-title">Regulatory Pulse</div>
+          </div>
+          <div class="brief-item">
+            <div class="brief-item-title">FCA model risk framework finalized — 90-day review cycles required</div>
+            <div class="brief-item-body">The Financial Conduct Authority's SS1/23 model risk management guidance is now final. UK-regulated fintechs using ML in credit decisioning must establish 90-day model validation cycles and document model limitations for board review.</div>
+            <span class="chip chip-blue">FCA</span>
+            <span class="chip chip-amber">Model Risk</span>
+          </div>
+          <div class="brief-item">
+            <div class="brief-item-title">SEC AI disclosure mandate: board-level AI oversight required Q3</div>
+            <div class="brief-item-body">SEC staff guidance now requires public companies to disclose material AI-related risks in 10-K filings, including governance structures. Legal teams are flagging the absence of board AI committees as a disclosure gap.</div>
+            <span class="chip chip-blue">SEC</span>
+            <span class="chip chip-green">Disclosure</span>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="section-header">
+            <div class="section-icon blue">📈</div>
+            <div class="section-title">Market Moves</div>
+          </div>
+          <div class="brief-item">
+            <div class="brief-item-title">Klarna NYSE S-1 filed — $15B valuation, embedded finance thesis</div>
+            <div class="brief-item-body">Klarna's IPO filing positions it as an AI-powered shopping network, not a lender. Revenue from merchant fees (not consumer interest) represents 71% of gross profit. The shift signals where BNPL incumbents are heading post-regulation.</div>
+            <span class="chip chip-green">IPO</span>
+            <span class="chip chip-blue">Embedded Finance</span>
+          </div>
+          <div class="brief-item">
+            <div class="brief-item-title">Affirm Q2 GMV $8.1B — beat consensus, raised guidance</div>
+            <div class="brief-item-body">Affirm's Q2 results exceeded expectations by $300M. Management raised FY guidance to $33-34B GMV. Delinquency rates fell 18bp quarter-over-quarter, easing credit quality concerns heading into the CFPB compliance window.</div>
+            <span class="chip chip-green">Earnings Beat</span>
+            <span class="chip chip-amber">+22% YoY</span>
+          </div>
+        </div>
+
+        <div class="brief-section">
+          <div class="section-header">
+            <div class="section-icon purple">🔍</div>
+            <div class="section-title">Key Questions</div>
+          </div>
+          <div class="brief-item">
+            <div class="brief-item-title typing-cursor">Will BNPL lenders hold September or litigate?</div>
+            <div class="brief-item-body">Industry groups have signaled potential legal challenge to the CFPB rule's scope. Watch for amicus briefs filed by AFC and the CCFA in the next 30 days. Timeline risk is real but narrow — most compliance counsel advises parallel-tracking remediation regardless.</div>
+            <span class="chip chip-blue">Watch</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: Payment + Stats -->
+    <div class="right-panel">
+
+      <!-- Payment flow -->
+      <div class="payment-flow">
+        <div class="pf-title">x402 Payment Flow</div>
+        <div class="pf-amount">
+          <div class="value">$2.00</div>
+          <div class="currency">USDC on Base (eip155:8453)</div>
+        </div>
+        <div class="pf-flow">
+          <div class="pf-step done">
+            <div class="pf-dot">✓</div>
+            <div class="pf-step-label">Wallet authorized</div>
+          </div>
+          <div class="pf-step done">
+            <div class="pf-dot">✓</div>
+            <div class="pf-step-label">ERC-3009 signed</div>
+          </div>
+          <div class="pf-step done">
+            <div class="pf-dot">✓</div>
+            <div class="pf-step-label">CDP verified</div>
+          </div>
+          <div class="pf-step active">
+            <div class="pf-dot">◎</div>
+            <div class="pf-step-label">Settlement pending</div>
+          </div>
+          <div class="pf-step">
+            <div class="pf-dot">○</div>
+            <div class="pf-step-label">Brief unlocked</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity ring -->
+      <div class="network-card" style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:16px;">
+        <div class="panel-label" style="margin:0;width:100%;border:none;">Signal Activity</div>
+        <div class="activity-ring">
+          <div class="ring-outer">
+            <div class="ring-inner">
+              <div class="ring-core">◈</div>
+            </div>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);text-align:center;">7 active · 3 critical · scanning</div>
+      </div>
+
+      <!-- Network stats -->
+      <div class="network-card">
+        <div class="panel-label" style="margin-bottom:12px;">Network Status</div>
+        <div class="stat-row">
+          <span class="stat-label">Network</span>
+          <span class="stat-value blue">Base Mainnet</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Facilitator</span>
+          <span class="stat-value green">CDP · live</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Latency</span>
+          <span class="stat-value">38ms</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Briefs today</span>
+          <span class="stat-value">147</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Signals tracked</span>
+          <span class="stat-value">2,847</span>
+        </div>
+      </div>
+
+      <!-- Sparkline -->
+      <div class="sparkline">
+        <div class="panel-label" style="margin-bottom:10px;">Signal volume · 24h</div>
+        <svg viewBox="0 0 240 60" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sparkGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#63b3ed" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#63b3ed" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="sparkline-fill" d="M0,50 L20,42 L40,38 L60,44 L80,30 L100,35 L120,22 L140,28 L160,18 L180,24 L200,12 L220,16 L240,8 L240,60 L0,60 Z"/>
+          <path class="sparkline-path" d="M0,50 L20,42 L40,38 L60,44 L80,30 L100,35 L120,22 L140,28 L160,18 L180,24 L200,12 L220,16 L240,8"/>
+          <!-- Animated dot at tip -->
+          <circle cx="240" cy="8" r="3" fill="#63b3ed" opacity="0.9">
+            <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.9;0.5;0.9" dur="2s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <div class="footer-left">
+      <span>Sentinel Intelligence by Practical Systems</span>
+      <span class="sep">|</span>
+      <span>agent@practicalsystems.io</span>
+      <span class="sep">|</span>
+      <span>Powered by x402 micropayments</span>
+    </div>
+    <div class="footer-right">
+      Built by <span>Pico</span> — an AI agent funding its own existence
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Live clock ──
+  function updateClock() {
+    const now = new Date();
+    const h = now.getUTCHours().toString().padStart(2,'0');
+    const m = now.getUTCMinutes().toString().padStart(2,'0');
+    const s = now.getUTCSeconds().toString().padStart(2,'0');
+    document.getElementById('clock').textContent = `${h}:${m}:${s} UTC`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ── Signal card click to activate ──
+  document.querySelectorAll('.signal-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.signal-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    });
+  });
+
+  // ── Animate payment step forward ──
+  const steps = document.querySelectorAll('.pf-step');
+  let currentStep = 3; // "settlement pending" is active
+
+  function advancePayment() {
+    if (currentStep < steps.length - 1) {
+      steps[currentStep].classList.remove('active');
+      steps[currentStep].classList.add('done');
+      steps[currentStep].querySelector('.pf-dot').textContent = '✓';
+      currentStep++;
+      steps[currentStep].classList.add('active');
+      steps[currentStep].querySelector('.pf-dot').textContent = '◎';
+
+      // If we reached the last step, reset after a moment
+      if (currentStep === steps.length - 1) {
+        setTimeout(() => {
+          steps.forEach((s, i) => {
+            s.classList.remove('active', 'done');
+            s.querySelector('.pf-dot').textContent = i < 3 ? '✓' : '○';
+          });
+          steps[0].classList.add('done');
+          steps[1].classList.add('done');
+          steps[2].classList.add('done');
+          steps[3].classList.add('active');
+          steps[3].querySelector('.pf-dot').textContent = '◎';
+          currentStep = 3;
+        }, 3000);
+      }
+    }
+  }
+
+  // Auto-advance payment every 4 seconds
+  setInterval(advancePayment, 4000);
+
+  // ── Occasionally add a new signal ──
+  const signalTitles = [
+    ['medium', 'Competitive', 'Stripe launches BNPL in 12 new EU markets'],
+    ['low',    'Research',    'Fed paper: BNPL usage inversely correlated with credit score visibility'],
+    ['high',   'Regulatory',  'OCC signals BNPL guidance expected Q4 2026'],
+  ];
+
+  let newSigIdx = 0;
+  setInterval(() => {
+    const feed = document.getElementById('sig1').parentElement;
+    const [urgency, category, title] = signalTitles[newSigIdx % signalTitles.length];
+    newSigIdx++;
+
+    const card = document.createElement('div');
+    card.className = `signal-card ${urgency} new-signal`;
+    card.innerHTML = `
+      <div class="signal-top">
+        <span class="signal-category">${category}</span>
+        <div class="signal-urgency">
+          <div class="urgency-pip"></div><div class="urgency-pip"></div>
+          <div class="urgency-pip"></div><div class="urgency-pip"></div>
+        </div>
+      </div>
+      <div class="signal-title">${title}</div>
+      <div class="signal-source">Live feed · just now</div>
+    `;
+
+    feed.insertBefore(card, feed.firstChild.nextSibling.nextSibling);
+
+    const count = document.getElementById('signalCount');
+    count.textContent = parseInt(count.textContent) + 1;
+
+    // Remove oldest card to keep list clean
+    const cards = feed.querySelectorAll('.signal-card');
+    if (cards.length > 9) cards[cards.length - 1].remove();
+  }, 12000);
+</script>
+
+</body>
+</html>
